@@ -1,0 +1,96 @@
+{
+  "name": "Folio Track D source-grounding benchmark",
+  "version": 1,
+  "sources": [
+    {
+      "id": "lecture-attention",
+      "title": "Attention lecture",
+      "location": "Attention lecture · p. 4",
+      "content": "Self-attention lets each token weigh the importance of every other token in the same sequence. An input embedding is projected into a query (Q), key (K), and value (V). Attention scores are computed as softmax(QKᵀ / √dₖ)V. The scale factor prevents dot products from becoming too large. Unlike recurrent networks, self-attention can relate distant tokens directly."
+    },
+    {
+      "id": "transformer-textbook",
+      "title": "Transformer textbook",
+      "location": "Transformer textbook · ch. 3",
+      "content": "A transformer layer combines multi-head attention with a position-wise feed-forward network, residual connections, and layer normalization. Multiple attention heads learn different relationships in parallel. Positional encodings add information about token order, since attention by itself has no inherent concept of sequence position."
+    },
+    {
+      "id": "cross-attention-video",
+      "title": "Cross-attention lecture",
+      "location": "Cross-attention lecture · 06:30",
+      "content": "Queries are the questions asked by each token and keys are descriptions that help match relevant information. Values hold the information that gets mixed together. Cross-attention uses queries from one sequence and keys and values from another sequence."
+    }
+  ],
+  "cases": [
+    {
+      "id": "attention-importance",
+      "question": "What does self-attention let each token do?",
+      "referenceAnswer": "Each token can weigh the importance of every other token in the same sequence.",
+      "relevantSources": ["lecture-attention"],
+      "relevantEvidence": ["Self-attention lets each token weigh the importance of every other token"]
+    },
+    {
+      "id": "query-key-value",
+      "question": "What are query, key, and value in an attention layer?",
+      "referenceAnswer": "The embedding is projected into Q, K, and V. Queries act as questions, keys help match relevant information, and values contain the information that gets combined.",
+      "relevantSources": ["lecture-attention", "cross-attention-video"],
+      "relevantEvidence": [
+        "An input embedding is projected into a query (Q), key (K), and value (V)",
+        "Queries are the questions asked by each token and keys are descriptions",
+        "Values hold the information that gets mixed together"
+      ]
+    },
+    {
+      "id": "scale-factor",
+      "question": "Why is the attention score scaled?",
+      "referenceAnswer": "The scale factor prevents dot products from becoming too large.",
+      "relevantSources": ["lecture-attention"],
+      "relevantEvidence": [
+        "Attention scores are computed as softmax(QKᵀ / √dₖ)V",
+        "The scale factor prevents dot products from becoming too large"
+      ]
+    },
+    {
+      "id": "long-range",
+      "question": "Can self-attention relate distant tokens directly?",
+      "referenceAnswer": "Yes. The source states that self-attention can relate distant tokens directly.",
+      "relevantSources": ["lecture-attention"],
+      "relevantEvidence": ["self-attention can relate distant tokens directly"]
+    },
+    {
+      "id": "attention-heads",
+      "question": "What do multiple attention heads learn?",
+      "referenceAnswer": "Multiple heads learn different relationships in parallel.",
+      "relevantSources": ["transformer-textbook"],
+      "relevantEvidence": ["Multiple attention heads learn different relationships in parallel"]
+    },
+    {
+      "id": "cross-attention",
+      "question": "Where do cross-attention keys and values come from?",
+      "referenceAnswer": "They come from a different sequence than the queries.",
+      "relevantSources": ["cross-attention-video"],
+      "relevantEvidence": ["Cross-attention uses queries from one sequence and keys and values from another sequence"]
+    },
+    {
+      "id": "position-encoding",
+      "question": "Why are positional encodings used in transformers?",
+      "referenceAnswer": "They add token-order information because attention has no inherent concept of sequence position.",
+      "relevantSources": ["transformer-textbook"],
+      "relevantEvidence": ["Positional encodings add information about token order"]
+    },
+    {
+      "id": "off-material-geology",
+      "question": "What causes tectonic plates to move?",
+      "referenceAnswer": "",
+      "relevantSources": [],
+      "offMaterial": true
+    },
+    {
+      "id": "off-material-history",
+      "question": "Who was the first emperor of the Roman Empire?",
+      "referenceAnswer": "",
+      "relevantSources": [],
+      "offMaterial": true
+    }
+  ]
+}

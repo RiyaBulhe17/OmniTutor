@@ -1,0 +1,294 @@
+{
+  "benchmark": "Folio Track D source-grounding benchmark",
+  "version": 1,
+  "generatedAt": "2026-10-14T18:42:41.530Z",
+  "mode": "live model-judged",
+  "model": "gemini-flash-lite-latest",
+  "providerUsage": {
+    "answers": {
+      "gemini": 7,
+      "ollama": 0,
+      "unknown": 0
+    },
+    "judges": {
+      "gemini": 7,
+      "ollama": 0,
+      "unknown": 0
+    }
+  },
+  "caseCount": 9,
+  "personalization": {
+    "profileCount": 3,
+    "questionCount": 18,
+    "averageMasteryGain": 0.605,
+    "questionRepetitionRate": 0.222,
+    "repeatedQuestionCount": 4,
+    "profiles": [
+      {
+        "id": "new-learner",
+        "sessions": [
+          {
+            "session": 1,
+            "weakestTopic": "Attention"
+          },
+          {
+            "session": 2,
+            "weakestTopic": "Attention"
+          },
+          {
+            "session": 3,
+            "weakestTopic": "Attention"
+          }
+        ],
+        "topics": {
+          "Attention": {
+            "initialMastery": 0.2,
+            "finalMastery": 0.842,
+            "gain": 0.642,
+            "quizResponses": 3
+          },
+          "QKV": {
+            "initialMastery": 0.2,
+            "finalMastery": 0.842,
+            "gain": 0.642,
+            "quizResponses": 3
+          }
+        }
+      },
+      {
+        "id": "returning-learner",
+        "sessions": [
+          {
+            "session": 1,
+            "weakestTopic": "Cross-attention"
+          },
+          {
+            "session": 2,
+            "weakestTopic": "Cross-attention"
+          },
+          {
+            "session": 3,
+            "weakestTopic": "Cross-attention"
+          }
+        ],
+        "topics": {
+          "Attention": {
+            "initialMastery": 0.2,
+            "finalMastery": 0.974,
+            "gain": 0.774,
+            "quizResponses": 3
+          },
+          "Cross-attention": {
+            "initialMastery": 0.2,
+            "finalMastery": 0.842,
+            "gain": 0.642,
+            "quizResponses": 3
+          }
+        }
+      },
+      {
+        "id": "struggling-learner",
+        "sessions": [
+          {
+            "session": 1,
+            "weakestTopic": "QKV"
+          },
+          {
+            "session": 2,
+            "weakestTopic": "QKV"
+          },
+          {
+            "session": 3,
+            "weakestTopic": "QKV"
+          }
+        ],
+        "topics": {
+          "QKV": {
+            "initialMastery": 0.2,
+            "finalMastery": 0.489,
+            "gain": 0.289,
+            "quizResponses": 3
+          },
+          "Cross-attention": {
+            "initialMastery": 0.2,
+            "finalMastery": 0.842,
+            "gain": 0.642,
+            "quizResponses": 3
+          }
+        }
+      }
+    ],
+    "limitation": "Synthetic response sequences illustrate model behavior; the mastery gain is not a measured learning outcome."
+  },
+  "metrics": {
+    "contextPrecisionAt6": 1,
+    "contextRecallAt6": 1,
+    "offMaterialRefusalRate": 1,
+    "faithfulness": 1,
+    "answerRelevancy": 1,
+    "citationAccuracy": 1,
+    "citationLabelAccuracy": 1,
+    "citationFormatCompliance": 0,
+    "unsupportedAnswerRate": 0
+  },
+  "cases": [
+    {
+      "id": "attention-importance",
+      "offMaterial": false,
+      "retrieved": [
+        "lecture-attention"
+      ],
+      "contextPrecision": 1,
+      "contextRecall": 1,
+      "refusedBeforeGeneration": false,
+      "answer": "Self-attention lets each token weigh the importance of every other token in the same sequence.\n\nSource: Attention lecture · p. 4",
+      "answerProvider": "gemini",
+      "judgeProvider": "gemini",
+      "faithfulness": 1,
+      "answerRelevancy": 1,
+      "citationAccuracy": 1,
+      "citationFormatCompliant": false,
+      "citationLabelMatchesExpected": true,
+      "unsupportedClaims": false
+    },
+    {
+      "id": "query-key-value",
+      "offMaterial": false,
+      "retrieved": [
+        "lecture-attention",
+        "cross-attention-video",
+        "cross-attention-video"
+      ],
+      "contextPrecision": 1,
+      "contextRecall": 1,
+      "refusedBeforeGeneration": false,
+      "answer": "Based on the provided evidence:\n\n- **An input embedding** is projected into a query (Q), key (K), and value (V).\n- **Queries** are the questions asked by each token.\n- **Keys** are descriptions that help match relevant information.\n- **Values** hold the information that gets mixed together.\n\nSource: Attention lecture · p. 4; Cross-attention lecture · 06:30",
+      "answerProvider": "gemini",
+      "judgeProvider": "gemini",
+      "faithfulness": 1,
+      "answerRelevancy": 1,
+      "citationAccuracy": 1,
+      "citationFormatCompliant": false,
+      "citationLabelMatchesExpected": true,
+      "unsupportedClaims": false
+    },
+    {
+      "id": "scale-factor",
+      "offMaterial": false,
+      "retrieved": [
+        "lecture-attention",
+        "lecture-attention"
+      ],
+      "contextPrecision": 1,
+      "contextRecall": 1,
+      "refusedBeforeGeneration": false,
+      "answer": "The scale factor prevents dot products from becoming too large.\n\nSource: Attention lecture · p. 4",
+      "answerProvider": "gemini",
+      "judgeProvider": "gemini",
+      "faithfulness": 1,
+      "answerRelevancy": 1,
+      "citationAccuracy": 1,
+      "citationFormatCompliant": false,
+      "citationLabelMatchesExpected": true,
+      "unsupportedClaims": false
+    },
+    {
+      "id": "long-range",
+      "offMaterial": false,
+      "retrieved": [
+        "lecture-attention"
+      ],
+      "contextPrecision": 1,
+      "contextRecall": 1,
+      "refusedBeforeGeneration": false,
+      "answer": "Yes, unlike recurrent networks, self-attention can relate distant tokens directly.\n\nSource: Attention lecture · p. 4",
+      "answerProvider": "gemini",
+      "judgeProvider": "gemini",
+      "faithfulness": 1,
+      "answerRelevancy": 1,
+      "citationAccuracy": 1,
+      "citationFormatCompliant": false,
+      "citationLabelMatchesExpected": true,
+      "unsupportedClaims": false
+    },
+    {
+      "id": "attention-heads",
+      "offMaterial": false,
+      "retrieved": [
+        "transformer-textbook"
+      ],
+      "contextPrecision": 1,
+      "contextRecall": 1,
+      "refusedBeforeGeneration": false,
+      "answer": "Multiple attention heads learn different relationships in parallel.\n\nSource: Transformer textbook · ch. 3",
+      "answerProvider": "gemini",
+      "judgeProvider": "gemini",
+      "faithfulness": 1,
+      "answerRelevancy": 1,
+      "citationAccuracy": 1,
+      "citationFormatCompliant": false,
+      "citationLabelMatchesExpected": true,
+      "unsupportedClaims": false
+    },
+    {
+      "id": "cross-attention",
+      "offMaterial": false,
+      "retrieved": [
+        "cross-attention-video"
+      ],
+      "contextPrecision": 1,
+      "contextRecall": 1,
+      "refusedBeforeGeneration": false,
+      "answer": "According to the provided text, keys and values in cross-attention come from another sequence.\n\nSource: Cross-attention lecture · 06:30",
+      "answerProvider": "gemini",
+      "judgeProvider": "gemini",
+      "faithfulness": 1,
+      "answerRelevancy": 1,
+      "citationAccuracy": 1,
+      "citationFormatCompliant": false,
+      "citationLabelMatchesExpected": true,
+      "unsupportedClaims": false
+    },
+    {
+      "id": "position-encoding",
+      "offMaterial": false,
+      "retrieved": [
+        "transformer-textbook"
+      ],
+      "contextPrecision": 1,
+      "contextRecall": 1,
+      "refusedBeforeGeneration": false,
+      "answer": "Positional encodings are used in transformers because attention by itself has no inherent concept of sequence position, so they add information about token order.\n\nSource: Transformer textbook · ch. 3",
+      "answerProvider": "gemini",
+      "judgeProvider": "gemini",
+      "faithfulness": 1,
+      "answerRelevancy": 1,
+      "citationAccuracy": 1,
+      "citationFormatCompliant": false,
+      "citationLabelMatchesExpected": true,
+      "unsupportedClaims": false
+    },
+    {
+      "id": "off-material-geology",
+      "offMaterial": true,
+      "retrieved": [],
+      "contextPrecision": 1,
+      "contextRecall": 1,
+      "refusedBeforeGeneration": true
+    },
+    {
+      "id": "off-material-history",
+      "offMaterial": true,
+      "retrieved": [],
+      "contextPrecision": 1,
+      "contextRecall": 1,
+      "refusedBeforeGeneration": true
+    }
+  ],
+  "limitations": [
+    "This small, synthetic benchmark is a smoke/evaluation set, not a representative learner study.",
+    "Faithfulness, answer relevancy, and citation accuracy use an LLM judge and require human review before claiming a formal score.",
+    "Context precision and recall use annotated evidence fragments, not a human-reviewed RAGAS/DeepEval/TruLens run.",
+    "The deterministic off-material test measures Folio's lexical retrieval gate, not every natural-language paraphrase."
+  ]
+}

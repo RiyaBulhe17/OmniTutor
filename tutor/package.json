@@ -1,0 +1,17 @@
+{
+  "name": "folio-study-companion",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "check": "node --check app.js && node --check server.mjs && node --check ingest.mjs && node --check source-files.mjs && node --check assessment-verification.mjs && node --check assessment-results.mjs && node --check assessment-feedback.mjs && node --check source-citations.mjs && node --check presentation-visuals.mjs && node --check evaluation/run.mjs && node --check evaluation/personalization.mjs",
+    "test": "node --test",
+    "eval": "node evaluation/run.mjs",
+    "eval:live": "node evaluation/run.mjs --live",
+    "eval:personalization": "node evaluation/personalization.mjs"
+  },
+  "dependencies": {
+    "fflate": "^0.8.3",
+    "pdfjs-dist": "^6.4.299"
+  }
+}

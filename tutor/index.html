@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8f7f4">
+  <title>Folio — your learning companion</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#" aria-label="Folio home">
+      <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+      <span>folio<span class="brand-period">.</span></span>
+    </a>
+
+    <div class="course-label">YOUR LEARNING SPACE</div>
+    <button class="course-switcher" id="courseSwitcher" type="button">
+      <span class="course-icon">N</span>
+      <span class="course-copy"><strong>Neural networks</strong><small>Current subject</small></span>
+      <span class="chevron">⌄</span>
+    </button>
+
+    <div class="nav-label">STUDY</div>
+    <nav class="main-nav" aria-label="Main navigation">
+      <button class="nav-item active" type="button" data-view="workspaceView" aria-current="page">
+        <span class="nav-icon">▧</span><span>My materials</span><span class="nav-count" id="sourceCount">03</span>
+      </button>
+      <button class="nav-item" type="button" data-view="practiceView">
+        <span class="nav-icon">◷</span><span>Practice</span>
+      </button>
+      <button class="nav-item" type="button" data-view="topicOrbitView">
+        <span class="nav-icon">◎</span><span>Topic orbit</span>
+      </button>
+      <button class="nav-item" type="button" data-view="plannerView">
+        <span class="nav-icon">▦</span><span>Study plan</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-spacer"></div>
+
+    <div class="streak-card">
+      <div class="streak-top"><span class="streak-icon">✳</span><span>YOUR MOMENTUM</span><span class="streak-value">04 days</span></div>
+      <p>A little progress adds up. You're building a good habit.</p>
+      <div class="streak-dots" aria-label="Four study days this week">
+        <i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i></i><i></i><i></i>
+      </div>
+    </div>
+
+    <button class="profile-button" id="settingsButton" type="button">
+      <span class="avatar">A</span><span class="profile-copy"><strong>Alex Morgan</strong><small>Learning profile</small></span><span class="profile-more">···</span>
+    </button>
+  </aside>
+
+  <main class="app-main">
+    <header class="topbar">
+      <div class="breadcrumbs"><span>My workspace</span><span class="crumb-separator">/</span><strong id="breadcrumbCurrent">My materials</strong></div>
+      <div class="topbar-actions">
+        <span class="ollama-status ai-provider-status" id="ollamaStatus"><i></i><span>Checking AI providers…</span></span>
+        <button class="icon-button notification-button" type="button" aria-label="Notifications">♧<i></i></button>
+        <button class="top-avatar" type="button" aria-label="Open learning profile">A</button>
+      </div>
+    </header>
+
+    <div class="page-shell">
+      <section class="view active" id="workspaceView" aria-labelledby="workspaceTitle">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow"><span class="eyebrow-dot"></span> A CALMER WAY TO LEARN</div>
+            <h1 id="workspaceTitle">Your knowledge, <span>in one place.</span></h1>
+            <p class="page-subtitle">Bring your study material together. We'll help you make sense of it.</p>
+          </div>
+          <button class="button button-primary" id="addSourceTop" type="button"><span>＋</span> Add material</button>
+        </div>
+
+        <div class="subject-banner">
+          <div class="subject-copy">
+            <span class="subject-kicker">CURRENT SUBJECT <span class="subject-dot">·</span> 3 SOURCES</span>
+            <h2>Neural networks &amp; deep learning</h2>
+            <p>Picking up where you left off: <strong>Attention &amp; transformers</strong></p>
+            <button class="text-link" type="button" data-go-view="practiceView">Continue learning <span>→</span></button>
+          </div>
+          <div class="banner-art" aria-hidden="true">
+            <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div>
+            <span class="orbit-dot dot-one"></span><span class="orbit-dot dot-two"></span><span class="orbit-dot dot-three"></span>
+            <span class="orbit-core">f<span>.</span></span>
+            <span class="orbit-caption">IDEAS, CONNECTED</span>
+          </div>
+        </div>
+
+        <section class="topic-analytics-card" aria-labelledby="topicAnalyticsTitle">
+          <div class="section-heading">
+            <div><h2 id="topicAnalyticsTitle">Topic progress</h2><p>Charts update automatically as you complete practice questions.</p></div>
+            <span class="source-tag">✳ YOUR PRACTICE DATA</span>
+          </div>
+          <div class="topic-chart-grid" id="topicChartGrid"></div>
+        </section>
+
+        <div class="workspace-grid">
+          <div class="materials-column">
+            <div class="section-heading">
+              <div><h2>Your materials</h2><p>Everything you're learning from, in one place.</p></div>
+              <button class="small-link" id="addSourceInline" type="button">＋ Add source</button>
+            </div>
+
+            <div class="source-list" id="sourceList"></div>
+
+            <button class="dropzone" id="uploadButton" type="button">
+              <span class="upload-icon">↑</span><span><strong>Drop in a file or <em>browse</em></strong><small>PDF, DOCX, PPTX, text, images, audio, and video · up to 15 MB each</small></span>
+              <span class="upload-plus">＋</span>
+            </button>
+            <input id="fileInput" type="file" accept=".pdf,.txt,.md,.markdown,.csv,.docx,.pptx,.jpg,.jpeg,.png,.webp,.heic,.heif,.mp3,.wav,.aac,.flac,.ogg,.m4a,.mp4,.mov,.webm" multiple hidden>
+
+            <div class="section-heading insights-heading">
+              <div><h2>Made from your sources</h2><p>Study aids grounded in what you've added.</p></div>
+              <span class="source-tag">✳ SOURCE-GROUNDED</span>
+            </div>
+            <div class="study-aids" id="studyAids"></div>
+            <div class="study-aid-builder">
+              <div>
+                <strong>Make a study aid</strong>
+                <p>Choose the format that fits how you want to study.</p>
+              </div>
+              <div class="study-format-options" id="studyFormatOptions" role="group" aria-label="Study aid format">
+                <button class="study-format-option selected" type="button" data-format="summary" aria-pressed="true"><span>≋</span><strong>Summary</strong><small>Quick overview</small></button>
+                <button class="study-format-option" type="button" data-format="notes" aria-pressed="false"><span>▤</span><strong>Detailed notes</strong><small>Expanded, printable</small></button>
+                <button class="study-format-option" type="button" data-format="cheat-sheet" aria-pressed="false"><span>✳</span><strong>Cheat sheet</strong><small>Fast reference</small></button>
+              </div>
+              <div class="study-length-control" id="studyLengthControl" hidden>
+                <label for="studyPageCount">Detailed notes length</label>
+                <select id="studyPageCount">
+                  <option value="1">About 1 page</option>
+                  <option value="2">About 2 pages</option>
+                  <option value="3" selected>About 3 pages</option>
+                  <option value="5">About 5 pages</option>
+                  <option value="custom">Custom number</option>
+                </select>
+                <input id="customStudyPages" type="number" min="1" max="8" step="1" value="4" aria-label="Custom number of study-note pages" placeholder="Enter 1–8 pages" hidden>
+                <small>Choose 1–8 pages. Printed length is an estimate and may vary with your browser.</small>
+              </div>
+              <button class="button button-primary" id="generateSummary" type="button"><span>✦</span> Create selected study aid <span>→</span></button>
+            </div>
+          </div>
+
+          <aside class="insights-column">
+            <div class="insight-panel">
+              <div class="panel-heading">
+                <div><span class="panel-kicker">YOUR LEARNING PROFILE</span><h2>It's starting to click.</h2></div>
+                <span class="sparkle-mark">✳</span>
+              </div>
+              <p class="insight-intro">A snapshot of what you've been learning and where to focus next.</p>
+              <div class="mastery-label"><span>BKT mastery estimate</span><span id="masteryLabel">No model yet</span></div>
+              <div class="mastery-track"><span id="masteryBar" style="width: 0%"></span></div>
+              <div class="mastery-foot"><span id="masteryTopic">Complete a practice set to begin</span><strong id="masteryPercent">—</strong></div>
+              <div class="profile-divider"></div>
+              <div class="focus-title">TOPICS TO REVISIT</div>
+              <div id="topicMasteryList"><p class="insight-intro">Your topic progress will appear after your first practice set.</p></div>
+              <div class="next-step-card">
+                <span class="panel-kicker">YOUR NEXT BEST STEP</span>
+                <h3 id="nextStepTitle">Start with a quick check-in</h3>
+                <p id="nextStepDescription">Try a short diagnostic to help Folio learn what feels familiar.</p>
+                <button class="button button-primary" id="nextStepButton" type="button">Start a gentle diagnostic <span>→</span></button>
+                <small>Picked from your practice history · stays on this device</small>
+              </div>
+              <button class="outline-button" type="button" data-go-view="plannerView">See my learning plan <span>→</span></button>
+            </div>
+            <div class="source-promise"><span class="promise-icon">⌕</span><p><strong>Answers with receipts.</strong><br>Folio uses your sources to keep study guides and tutor answers grounded.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="view" id="practiceView" aria-labelledby="practiceTitle">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow"><span class="eyebrow-dot"></span> PRACTICE THAT MEETS YOU WHERE YOU ARE</div>
+            <h1 id="practiceTitle">Let's see what <span>has stuck.</span></h1>
+            <p class="page-subtitle">Quizzes made from your materials, tuned to your understanding.</p>
+          </div>
+          <span class="source-tag practice-source-tag">✳ BASED ON YOUR SOURCES</span>
+        </div>
+
+        <div class="practice-layout">
+          <div class="practice-main">
+            <div class="section-heading practice-section-heading">
+              <div><h2>Set up a practice session</h2><p>Make it feel like the kind of challenge you need today.</p></div>
+            </div>
+
+            <div class="setup-card">
+              <div class="form-group">
+                <label for="topicSelect">What would you like to practice?</label>
+                <select id="topicSelect"><option>Attention &amp; transformers</option><option>Query, key &amp; value</option><option>Cross-attention</option><option>Everything I've added</option></select>
+              </div>
+              <div class="form-group question-count-group">
+                <label for="questionCountSelect">How many questions?</label>
+                <div class="question-count-controls">
+                  <select id="questionCountSelect">
+                    <option value="3">3 questions</option>
+                    <option value="5" selected>5 questions</option>
+                    <option value="8">8 questions</option>
+                    <option value="10">10 questions</option>
+                    <option value="15">15 questions</option>
+                    <option value="custom">Custom number</option>
+                  </select>
+                  <input id="customQuestionCount" type="number" min="1" max="30" step="1" value="7" aria-label="Custom number of quiz questions" placeholder="1–30" hidden>
+                </div>
+                <small>Choose a preset or enter any whole number from 1 to 30.</small>
+              </div>
+              <div class="form-group">
+                <span class="field-label">Choose a challenge level</span>
+                <div class="segmented-control" id="difficultyControl">
+                  <button type="button" data-value="Gentle" class="selected"><span>◌</span> Ease me in</button>
+                  <button type="button" data-value="Balanced"><span>◍</span> Just right</button>
+                  <button type="button" data-value="Stretch"><span>◉</span> Stretch me</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <span class="field-label">Pick your question styles</span>
+                <div class="question-types">
+                  <label class="type-choice selected"><input type="checkbox" value="Multiple choice" checked><span class="type-icon type-mc">A</span><span><strong>Multiple choice</strong><small>Choose the best answer</small></span><span class="checkbox-mark">✓</span></label>
+                  <label class="type-choice selected"><input type="checkbox" value="True or false" checked><span class="type-icon type-tf">✓</span><span><strong>True or false</strong><small>Test your quick recall</small></span><span class="checkbox-mark">✓</span></label>
+                  <label class="type-choice"><input type="checkbox" value="Short answer"><span class="type-icon type-sa">✎</span><span><strong>Short answer</strong><small>Explain it in your own words</small></span><span class="checkbox-mark">✓</span></label>
+                  <label class="type-choice"><input type="checkbox" value="Numerical problem"><span class="type-icon type-sa">#</span><span><strong>Numerical problem</strong><small>Calculate and enter a value</small></span><span class="checkbox-mark">✓</span></label>
+                </div>
+              </div>
+              <div class="session-footer">
+                <span class="session-length"><span>◷</span><span><strong id="sessionQuestionLabel">5 questions</strong><small id="sessionTimeLabel">About 5 minutes</small></span></span>
+                <button class="button button-primary" id="createQuizButton" type="button"><span>✦</span> Build my practice set</button>
+                <button class="sample-quiz-link" id="sampleQuizButton" type="button">Preview a sample set</button>
+              </div>
+            </div>
+
+            <div class="quiz-container" id="quizContainer" hidden></div>
+          </div>
+          <aside class="practice-side">
+            <div class="practice-tip-card"><span class="tip-sparkle">✳</span><span class="panel-kicker">A LITTLE PERSONALIZED</span><h3>A challenge that's right for you.</h3><p>Miss something? It comes back around. Get it right? We'll help you build on it.</p><span class="tip-foot">YOUR UNDERSTANDING SHAPES WHAT'S NEXT</span></div>
+            <div class="recent-card"><div class="recent-header"><h3>Recently practiced</h3><span>THIS WEEK</span></div><div class="recent-score"><div class="score-ring"><strong id="recentScoreValue">4/5</strong></div><div><strong id="recentTopic">Attention basics</strong><small id="recentWhen">Sample session · 5 questions</small></div></div><div class="recent-result"><span class="result-indicator">↗</span><span id="recentSummary">An illustrative sample result</span><strong id="recentChange">DEMO</strong></div></div>
+            <div class="evidence-note"><span>⌕</span><p>Every question points back to something in your materials. No surprises from the internet.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="view" id="topicOrbitView" aria-labelledby="topicOrbitTitle">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow"><span class="eyebrow-dot"></span> EXPLORE HOW YOUR IDEAS CONNECT</div>
+            <h1 id="topicOrbitTitle">Your learning, <span>in orbit.</span></h1>
+            <p class="page-subtitle">Drag to rotate the map. Select any source or topic node to see its own explanation and connections.</p>
+          </div>
+        </div>
+        <div class="orbit-studio">
+          <div class="orbit-studio-header"><span>FOLIO / TOPIC ORBIT</span><span id="orbitGraphMeta">0 SOURCES · 0 TOPICS</span><button class="orbit-motion-toggle" id="orbitMotionToggle" type="button" aria-pressed="true">PAUSE ROTATION</button></div>
+          <div class="orbit-canvas-wrap">
+            <canvas id="topicOrbitCanvas" aria-label="Rotatable three-dimensional diagram of your study sources and connected topics"></canvas>
+            <p class="orbit-instruction">DRAG TO ROTATE <span>·</span> CLICK ANY NODE TO EXPLORE</p>
+            <div class="orbit-legend"><span><i class="legend-source"></i> MATERIAL</span><span><i class="legend-topic"></i> TOPIC</span><span><i class="legend-prerequisite"></i> PREREQUISITE</span><span><i class="legend-focus"></i> NEEDS PRACTICE</span></div>
+          </div>
+          <div class="orbit-topic-picker" id="orbitTopicPicker" aria-label="Choose a topic"></div>
+        </div>
+        <section class="topic-explainer" id="topicExplainer" aria-live="polite">
+          <div class="topic-explainer-empty"><span>◎</span><div><strong>Explore any orbit node</strong><p>Select a source or topic in the graph to read its own source-based explanation.</p></div></div>
+        </section>
+      </section>
+
+      <section class="view" id="plannerView" aria-labelledby="plannerTitle">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow"><span class="eyebrow-dot"></span> SMALL STEPS, REAL PROGRESS</div>
+            <h1 id="plannerTitle">A plan that <span>fits your life.</span></h1>
+            <p class="page-subtitle">Tell us when your deadline is. We'll help you make the most of your study time.</p>
+          </div>
+          <button class="button button-primary" id="editPlanButton" type="button"><span>✦</span> Plan my study</button>
+        </div>
+
+        <div class="planner-layout">
+          <div class="planner-main">
+            <div class="deadline-banner"><span class="deadline-icon">▦</span><div><span>YOUR UPCOMING GOAL</span><strong>Neural networks midterm</strong></div><div class="deadline-date"><strong id="daysToExam">12</strong><span>DAYS TO GO</span></div><button id="deadlineButton" type="button" aria-label="Change exam deadline">✎</button></div>
+            <div class="section-heading today-heading"><div><h2>This week's rhythm</h2><p>A flexible plan built around your goal and available time.</p></div><span class="week-label" id="plannerWeekLabel">THIS WEEK</span></div>
+            <div class="week-grid" id="weekGrid"></div>
+            <div class="today-card">
+              <div class="today-card-heading"><div><span class="panel-kicker" id="todayCaption">TODAY</span><h2>Your next small step.</h2></div><span class="today-progress" id="todayProgress">0 of 2 done</span></div>
+              <div id="todayTasks">
+                <div class="task-row" data-task="review">
+                  <button class="task-check" type="button" aria-label="Mark Review self-attention as complete"></button>
+                  <span class="task-icon task-icon-lilac">✧</span>
+                  <span class="task-copy"><strong>Review self-attention</strong><small>Read your key ideas · 15 min</small></span>
+                  <span class="task-source">YOUR NOTES</span><span class="task-time">9:00 AM</span>
+                </div>
+                <div class="task-row" data-task="quiz">
+                  <button class="task-check" type="button" aria-label="Mark Take a quick practice quiz as complete"></button>
+                  <span class="task-icon task-icon-peach">◷</span>
+                  <span class="task-copy"><strong>Take a quick practice quiz</strong><small>4 questions to check what stuck · 10 min</small></span>
+                  <span class="task-source">PERSONALIZED</span><span class="task-time">Anytime</span>
+                </div>
+              </div>
+              <button class="add-task-button" id="addTaskButton" type="button">＋ Add a study session</button>
+            </div>
+          </div>
+
+          <aside class="tutor-panel">
+            <div class="tutor-header"><div class="tutor-avatar">f<span>✳</span></div><div><strong>Your study buddy</strong><small><i></i> Here with your materials</small></div><button class="tutor-more" type="button" id="modelSettings">···</button></div>
+            <div class="tutor-context"><span>⌕</span> Answers grounded in <strong id="chatSourceCount">3 sources</strong></div>
+            <div class="chat-language-control">
+              <label for="chatLanguageSelect">Reply language</label>
+              <select id="chatLanguageSelect" aria-label="Study buddy reply language">
+                <option value="English">English</option>
+                <option value="Hindi">Hindi · हिंदी</option>
+                <option value="Hinglish">Hinglish · Hindi + English</option>
+              </select>
+              <label class="chat-speech-toggle"><input id="chatSpeakReplies" type="checkbox"><span>Read replies aloud</span></label>
+              <button class="chat-stop-speech" id="stopTutorSpeechButton" type="button" aria-label="Stop spoken reply">Stop audio</button>
+            </div>
+            <div class="chat-messages" id="chatMessages" aria-live="polite">
+              <div class="chat-day">TODAY</div>
+              <div class="chat-message assistant-message"><div class="chat-avatar">f</div><div><span class="message-author">FOLIO <span>· GEMINI + OLLAMA BACKUP</span></span><p>Hey Alex! 👋 What are you working through today? I can walk you through an idea from your notes, or help with something that isn't clicking yet.</p><button class="citation-pill" type="button" data-citation="lecture">▤ Lecture notes · p. 4</button></div></div>
+              <div class="suggestion-chips"><button type="button">Explain self-attention</button><button type="button">Quiz me on the basics</button></div>
+            </div>
+            <form class="chat-compose" id="chatForm">
+              <textarea id="chatInput" rows="2" maxlength="2000" aria-label="Ask Folio a question" placeholder="Ask anything about your materials…"></textarea>
+              <div class="compose-footer"><span>↵ <span>to send</span></span><div class="compose-actions"><button class="chat-voice-button" id="chatVoiceInputButton" type="button" aria-label="Ask by voice">🎙</button><button class="send-button" type="submit" aria-label="Send message">↑</button></div></div>
+            </form>
+            <div class="chat-disclaimer">Gemini requests send your prompt and relevant notes to Google. Voice input uses your browser's speech service and may send audio to its provider; Folio does not upload recordings to its server.</div>
+          </aside>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <dialog class="app-dialog" id="sourceDialog">
+    <form method="dialog" class="dialog-shell" id="sourceForm">
+      <div class="dialog-heading"><span class="dialog-icon">＋</span><button class="dialog-close" value="cancel" aria-label="Close dialog">×</button><span class="panel-kicker">GROW YOUR KNOWLEDGE BASE</span><h2>Add a study source</h2><p>Add notes, paste an excerpt, or save a link to keep your study materials together.</p></div>
+      <label class="dialog-label" for="sourceTitleInput">Give it a name</label><input class="dialog-input" id="sourceTitleInput" required maxlength="80" placeholder="e.g. Lecture 3 — Attention mechanisms">
+      <label class="dialog-label" for="sourceKindInput">What are you adding?</label><select class="dialog-input" id="sourceKindInput"><option value="Notes">My notes</option><option value="Textbook">Textbook excerpt</option><option value="Lecture">Lecture notes</option><option value="Slide deck">Slide deck</option><option value="Video">Lecture video</option><option value="Link">Website link</option></select>
+      <label class="dialog-label" for="sourceContentInput">Notes or text excerpt <span>optional</span></label><textarea class="dialog-input dialog-textarea" id="sourceContentInput" rows="5" placeholder="Paste notes or a text excerpt so Folio can ground study aids in your words…"></textarea>
+      <label class="dialog-label" for="sourceLocationInput">Page, slide, or timestamp <span>optional, but helpful for citations</span></label><input class="dialog-input" id="sourceLocationInput" maxlength="120" placeholder="e.g. p. 12, slide 4, or 06:30">
+      <label class="dialog-label" for="sourceUrlInput">Source link <span>optional</span></label><input class="dialog-input" id="sourceUrlInput" type="url" placeholder="https://…">
+      <p class="dialog-hint">You can add links for reference. YouTube video links play inline when you open the material; to make answers cite a webpage, also paste in the relevant excerpt.</p>
+      <p class="dialog-error" id="sourceError" role="alert"></p>
+      <div class="dialog-actions"><button class="button button-secondary" value="cancel">Cancel</button><button class="button button-primary" id="saveSourceButton" type="button">Add to my materials</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="app-dialog settings-dialog" id="settingsDialog">
+    <form method="dialog" class="dialog-shell" id="settingsForm">
+      <div class="dialog-heading"><span class="dialog-icon settings-icon">✳</span><button class="dialog-close" value="cancel" aria-label="Close dialog">×</button><span class="panel-kicker">GEMINI + LOCAL BACKUP</span><h2>AI provider settings</h2><p>Gemini Flash-Lite is the fast default. If Gemini is unavailable, Folio falls back to Ollama running on this computer.</p></div>
+      <div class="model-setting"><div><label class="dialog-label" for="plannerModelSelect">Study guides, quizzes &amp; plans · Gemini</label><p>Flash-Lite is tuned for faster responses.</p></div><select class="dialog-input" id="plannerModelSelect"><option value="gemini-flash-lite-latest">Gemini Flash-Lite · Fast</option><option value="gemini-3.8-flash">Gemini 3.8 Flash</option><option value="gemini-3.1-pro-preview">Gemini 3.1 Pro Preview</option></select></div>
+      <div class="model-setting"><div><label class="dialog-label" for="plannerFallbackSelect">Study generation · Ollama backup</label><p>Used automatically if Gemini is unavailable.</p></div><select class="dialog-input" id="plannerFallbackSelect"><option value="qwen2.5:7b">qwen2.5:7b</option><option value="qwen2.5:3b">qwen2.5:3b</option><option value="llama3.2:3b">llama3.2:3b</option></select></div>
+      <div class="model-setting"><div><label class="dialog-label" for="chatModelSelect">Study buddy · Gemini</label><p>Flash-Lite is tuned for faster responses.</p></div><select class="dialog-input" id="chatModelSelect"><option value="gemini-flash-lite-latest">Gemini Flash-Lite · Fast</option><option value="gemini-3.8-flash">Gemini 3.8 Flash</option><option value="gemini-3.1-pro-preview">Gemini 3.1 Pro Preview</option></select></div>
+      <div class="model-setting"><div><label class="dialog-label" for="chatFallbackSelect">Study buddy · Ollama backup</label><p>Used automatically if Gemini is unavailable.</p></div><select class="dialog-input" id="chatFallbackSelect"><option value="llama3.2:3b">llama3.2:3b</option><option value="qwen2.5:3b">qwen2.5:3b</option><option value="qwen2.5:7b">qwen2.5:7b</option></select></div>
+      <p class="dialog-hint">Set GEMINI_API_KEY in the private .env file next to server.mjs, then restart Folio. The key stays on this computer and is never saved in browser settings. Ollama must be running with its selected backup model installed.</p>
+      <button class="model-refresh" id="refreshModels" type="button">↻ &nbsp;Check Gemini and Ollama status</button>
+      <p class="dialog-error" id="settingsError" role="alert"></p>
+      <div class="dialog-actions"><button class="button button-secondary" value="cancel">Close</button><button class="button button-primary" id="saveSettingsButton" type="button">Save settings</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="app-dialog" id="planDialog">
+    <form method="dialog" class="dialog-shell" id="planForm">
+      <div class="dialog-heading">
+        <span class="dialog-icon">▦</span>
+        <button class="dialog-close" value="cancel" aria-label="Close dialog">×</button>
+        <span class="panel-kicker">MADE TO FIT YOUR LIFE</span>
+        <h2>Let's plan for your goal.</h2>
+        <p>Tell your AI study coach when you're preparing for and how in-depth you'd like the plan to be.</p>
+      </div>
+      <label class="dialog-label" for="planGoalInput">What are you preparing for?</label>
+      <input class="dialog-input" id="planGoalInput" value="Neural networks midterm" required maxlength="100">
+      <label class="dialog-label" for="planDeadlineInput">When is your exam or goal?</label>
+      <input class="dialog-input" id="planDeadlineInput" type="date" required>
+      <div class="plan-settings-grid">
+        <div>
+          <label class="dialog-label" for="planMinutesInput">Study time per day</label>
+          <select class="dialog-input" id="planMinutesInput">
+            <option value="15">15 minutes</option>
+            <option value="30" selected>30 minutes</option>
+            <option value="45">45 minutes</option>
+            <option value="60">1 hour</option>
+            <option value="90">1½ hours</option>
+          </select>
+        </div>
+        <div>
+          <label class="dialog-label" for="planDaysInput">Days per week</label>
+          <select class="dialog-input" id="planDaysInput">
+            <option value="3">3 days</option>
+            <option value="5" selected>5 days</option>
+            <option value="6">6 days</option>
+            <option value="7">Every day</option>
+          </select>
+        </div>
+      </div>
+      <label class="dialog-label" for="planDetailInput">How detailed should your plan be?</label>
+      <select class="dialog-input" id="planDetailInput">
+        <option value="light">A gentle overview</option>
+        <option value="balanced" selected>A balanced mix</option>
+        <option value="detailed">Step-by-step detail</option>
+      </select>
+      <p class="dialog-error" id="planError" role="alert"></p>
+      <div class="dialog-actions">
+        <button class="button button-secondary" value="cancel">Not right now</button>
+        <button class="button button-primary" id="generatePlanButton" type="button"><span>✦</span> Build my study plan</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="app-dialog content-dialog" id="contentDialog">
+    <form method="dialog" class="dialog-shell">
+    <button class="dialog-close" value="cancel" aria-label="Close dialog">×</button><span class="panel-kicker" id="contentKicker">YOUR STUDY GUIDE</span><h2 class="content-title" id="contentTitle"></h2>
+    <div class="speech-controls" aria-label="Read study material aloud">
+      <button class="button button-primary" id="speakContentButton" type="button">▶ Speak aloud</button>
+      <button class="button button-secondary" id="pauseSpeechButton" type="button" disabled>Pause</button>
+      <button class="button button-secondary" id="stopSpeechButton" type="button" disabled>Stop</button>
+      <label for="speechVoiceSelect">Voice</label><select id="speechVoiceSelect" aria-label="Speech voice"></select>
+      <span id="speechStatus" role="status" aria-live="polite">Uses a voice available in your browser.</span>
+    </div>
+    <div class="generated-content" id="contentBody"></div><div class="dialog-actions"><button class="button button-secondary" id="printContentButton" type="button">Print / Save as PDF</button><button class="button button-secondary" value="cancel">Close</button></div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="sr-only" id="liveRegion" role="status" aria-live="polite"></div>
+</body>
+</html>
